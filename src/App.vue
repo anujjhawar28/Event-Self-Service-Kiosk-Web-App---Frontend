@@ -1,115 +1,44 @@
 <script setup lang="ts">
-import Webcam from 'webcamjs'
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from '@/components/HelloWorld.vue'
-import { onMounted } from 'vue'
-const captureImage = () => {
-  Webcam.snap((dataUri: any) => {
-    console.log(dataUri)
-  })
-}
-
-const downloadImage = () => {
-  const dataUri = Webcam.snap()
-  const link = document.createElement('a')
-  link.href = dataUri
-  link.download = 'captured_image.jpg'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
-
-onMounted(() => {
-  Webcam.set({
-    width: 640,
-    height: 480,
-    dest_width: 640,
-    dest_height: 480,
-    image_format: 'jpeg',
-    jpeg_quality: 90
-  })
-  Webcam.attach('#webcam-container')
-})
+import { RouterView } from 'vue-router'
+import Header from './layouts/Header.vue'
+import Footer from './layouts/Footer.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-    <div id="webcam-container"></div>
-    <button @click="captureImage">Capture Image</button>
-    <button @click="downloadImage">Download Image</button>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-  <RouterView />
+  <div class="bg-gray-900">
+    <main class="relative isolate">
+      <Header />
+      <!-- Background -->
+      <div
+        class="absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+        aria-hidden="true"
+      >
+        <div
+          class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-25"
+          style="
+            clip-path: polygon(
+              73.6% 51.7%,
+              91.7% 11.8%,
+              100% 46.4%,
+              97.4% 82.2%,
+              92.5% 84.9%,
+              75.7% 64%,
+              55.3% 47.5%,
+              46.5% 49.4%,
+              45% 62.9%,
+              50.3% 87.2%,
+              21.3% 64.1%,
+              0.1% 100%,
+              5.4% 51.1%,
+              21.4% 63.9%,
+              58.9% 0.2%,
+              73.6% 51.7%
+            );
+          "
+        ></div>
+      </div>
+      <RouterView />
+      <Footer />
+    </main>
+  </div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
